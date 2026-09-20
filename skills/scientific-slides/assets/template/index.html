@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scientific slides — layout gallery</title>
+  <link rel="stylesheet" href="vendor/reveal/reset.css">
+  <link rel="stylesheet" href="vendor/reveal/reveal.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="vendor/highlight/github.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<!-- 1. Title. Replace prose in presentation.md before translating this layout. -->
+<section aria-label="Title">
+  <div class="sl-block" data-name="title" style="left:70px;top:165px;width:820px;height:auto">
+    <div class="sl-block-content"><h3 style="font-size:59px;line-height:1.15">A clear scientific story</h3></div>
+  </div>
+  <div class="sl-block" data-name="subtitle" style="left:74px;top:330px;width:790px;height:auto">
+    <div class="sl-block-content" style="font-size:30px"><p>An offline layout gallery</p></div>
+  </div>
+  <div class="sl-block" data-name="byline" style="left:74px;top:508px;width:790px;height:auto">
+    <div class="sl-block-content small"><p>Presenter name<br>Research group · Event · Date</p></div>
+  </div>
+</section>
+
+<!-- 2. An outline uses a grid inside one absolute block. -->
+<section aria-label="Outline">
+  <div class="sl-block slide-title"><div class="sl-block-content"><h3>The shape of the argument</h3></div></div>
+  <div class="sl-block" style="left:60px;top:145px;width:840px;height:auto">
+    <div class="sl-block-content outline-grid">
+      <div class="outline-card fragment" data-fragment-index="0"><b>01 · Question</b><p>What relationship do we want to learn?</p></div>
+      <div class="outline-card fragment" data-fragment-index="1"><b>02 · Model</b><p>State the assumptions and the uncertainty.</p></div>
+      <div class="outline-card fragment" data-fragment-index="2"><b>03 · Evidence</b><p>Compare predictions with observed data.</p></div>
+      <div class="outline-card fragment" data-fragment-index="3"><b>04 · Takeaway</b><p>Say what the results support.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Claim → equation → interpretation. -->
+<section aria-label="Prose and mathematics">
+  <div class="sl-block slide-title"><div class="sl-block-content"><h3>Start with an explicit model</h3></div></div>
+  <div class="sl-block" style="left:80px;top:140px;width:800px;height:auto">
+    <div class="sl-block-content">
+      <p class="fragment" data-fragment-index="0">We describe a response with a <span class="vocab">linear mean</span>.</p>
+      <p class="fragment equation" data-fragment-index="1" style="font-size:35px;margin:55px 0">\[y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\]</p>
+      <p class="fragment equation" data-fragment-index="2" style="font-size:29px">\[\varepsilon_i\sim N(0,\sigma^2),\qquad \boldsymbol\beta\sim N(\mathbf0,I_2)\]</p>
+      <p class="fragment" data-fragment-index="3" style="margin-top:48px">The posterior describes uncertainty about the intercept and slope.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Reveal the whole box together, then its next claim. -->
+<section aria-label="Boxed statement and reference">
+  <div class="sl-block slide-title"><div class="sl-block-content"><h3>Make the uncertainty explicit</h3></div></div>
+  <div class="sl-block rectangle fragment" data-fragment-index="0" style="left:70px;top:155px;width:820px;height:auto">
+    <div class="sl-block-content">
+      <p><strong>Pointwise credible intervals</strong></p>
+      <p>At each input, the band contains a stated amount of posterior probability for the mean response.</p>
+    </div>
+  </div>
+  <div class="sl-block fragment" data-fragment-index="1" style="left:80px;top:406px;width:800px;height:auto">
+    <div class="sl-block-content"><p>These figures use Matplotlib.<br><span class="citation">(Hunter, 2007)</span></p></div>
+  </div>
+  <div class="sl-block citation-footer fragment" data-fragment-index="1"><div class="sl-block-content">
+    <p>Hunter, J. D. (2007). Matplotlib: A 2D graphics environment. <em>Computing in Science &amp; Engineering, 9</em>(3), 90–95. <a href="https://doi.org/10.1109/MCSE.2007.55">https://doi.org/10.1109/MCSE.2007.55</a></p>
+  </div></div>
+</section>
+
+<!-- 5. Code is extracted from code/generate_figures.py by that script. -->
+<section aria-label="Code and mathematics">
+  <div class="sl-block slide-title"><div class="sl-block-content"><h3>The model has a short implementation</h3></div></div>
+  <div class="sl-block fragment" data-fragment-index="0" style="left:50px;top:205px;width:295px;height:auto">
+    <div class="sl-block-content" style="font-size:25px">
+      <p>Gaussian prior + Gaussian noise</p>
+      <p class="equation" style="margin:32px 0">\[\boldsymbol\beta\mid\mathbf y\sim N(m,V)\]</p>
+      <p class="small">The covariance keeps uncertainty in both coefficients.</p>
+    </div>
+  </div>
+  <div class="sl-block fragment" data-fragment-index="1" style="left:370px;top:210px;width:550px;height:auto">
+    <div class="sl-block-content"><pre><code class="language-python" data-code-source="posterior">def posterior(X, y, sigma):
+    precision = np.eye(2) + X.T @ X / sigma**2
+    covariance = np.linalg.inv(precision)
+    mean = covariance @ X.T @ y / sigma**2
+    return mean, covariance</code></pre></div>
+  </div>
+</section>
+
+<!-- 6. Vector diagrams stay crisp at any presentation scale. -->
+<section aria-label="SVG diagram">
+  <div class="sl-block slide-title"><div class="sl-block-content"><h3>Connect the model to the evidence</h3></div></div>
+  <div class="sl-block" style="left:40px;top:185px;width:880px;height:340px">
+    <div class="sl-block-content">
+      <svg class="diagram" viewBox="0 0 880 340" role="img" aria-label="Observed data and a prior feed a posterior, which produces predictions">
+        <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#666" stroke-width="1.5"/></marker></defs>
+        <g class="fragment" data-fragment-index="0">
+          <rect x="15" y="18" width="215" height="106" rx="14" fill="#f3f3f3" stroke="#888" stroke-width="2"/>
+          <text x="122" y="81" text-anchor="middle" font-size="25">Observed data</text>
+          <rect x="15" y="200" width="215" height="106" rx="14" fill="#f3f3f3" stroke="#888" stroke-width="2"/>
+          <text x="122" y="263" text-anchor="middle" font-size="25">Prior</text>
+        </g>
+        <g class="fragment" data-fragment-index="1">
+          <path d="M240 73 C292 73 284 161 330 161 M240 252 C292 252 284 161 330 161" fill="none" stroke="#777" stroke-width="2" marker-end="url(#arrow)"/>
+          <rect x="342" y="106" width="215" height="110" rx="14" fill="#00897b12" stroke="#00897b" stroke-width="2"/>
+          <text x="450" y="171" text-anchor="middle" font-size="25">Posterior</text>
+        </g>
+        <g class="fragment" data-fragment-index="2">
+          <path d="M567 161 L631 161" fill="none" stroke="#777" stroke-width="2" marker-end="url(#arrow)"/>
+          <rect x="645" y="106" width="215" height="110" rx="14" fill="#f0838315" stroke="#f08383" stroke-width="2"/>
+          <text x="752" y="171" text-anchor="middle" font-size="25">Predictions</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Section divider. -->
+<section class="divider" data-background-color="#f08383" aria-label="Section divider">
+  <div class="sl-block" style="left:75px;top:220px;width:810px;height:auto"><div class="sl-block-content"><h3 style="font-size:56px">What do the data say?</h3></div></div>
+  <div class="sl-block" style="left:80px;top:365px;width:800px;height:auto"><div class="sl-block-content" style="font-size:29px"><p>Predictions · residuals · uncertainty</p></div></div>
+</section>
+
+<!-- 8. Scientific results: sources and uncertainty are documented in the draft. -->
+<section aria-label="Two-panel results">
+  <div class="sl-block slide-title"><div class="sl-block-content"><h3>Show the fit and the observation noise</h3></div></div>
+  <div class="sl-block fragment" data-fragment-index="0" style="left:60px;top:105px;width:840px;height:auto"><div class="sl-block-content"><p>A small synthetic example with known observation noise.</p></div></div>
+  <div class="sl-block fragment" data-fragment-index="1" style="left:30px;top:222px;width:445px;height:340px"><div class="sl-block-content"><img src="figs/regression.png" alt="Linear posterior mean, observations, latent truth, and nested pointwise credible bands"></div></div>
+  <div class="sl-block fragment" data-fragment-index="1" style="left:485px;top:222px;width:445px;height:340px"><div class="sl-block-content"><img src="figs/residuals.png" alt="Observation errors relative to the true mean, with known noise distribution intervals"></div></div>
+  <div class="sl-block fragment" data-fragment-index="1" style="left:65px;top:585px;width:830px;height:auto"><div class="sl-block-content small"><p>Left: posterior intervals for the mean. Right: the known observation-noise distribution.</p></div></div>
+</section>
+
+<!-- 9–10. Native Reveal auto-animate pairs explicit data-id elements. -->
+<section data-auto-animate data-auto-animate-id="posterior-to-results" data-auto-animate-unmatched="false" aria-label="Large explanation">
+  <div class="sl-block slide-title" data-id="explanation-title"><div class="sl-block-content"><h3>From an equation to a result</h3></div></div>
+  <div class="sl-block" data-id="explanation-math" style="left:90px;top:140px;width:780px;height:auto"><div class="sl-block-content equation" data-id="equation-type" style="font-size:39px">\[\boldsymbol\beta\mid\mathbf y\sim N(m,V)\]</div></div>
+  <div class="sl-block" data-id="explanation-code" style="left:90px;top:310px;width:780px;height:auto"><div class="sl-block-content"><pre data-id="code-type" style="font-size:25px"><code class="language-python" data-code-source="posterior">def posterior(X, y, sigma):
+    precision = np.eye(2) + X.T @ X / sigma**2
+    covariance = np.linalg.inv(precision)
+    mean = covariance @ X.T @ y / sigma**2
+    return mean, covariance</code></pre></div></div>
+</section>
+<section data-auto-animate data-auto-animate-id="posterior-to-results" data-auto-animate-unmatched="false" aria-label="Compact explanation with results">
+  <div class="sl-block slide-title" data-id="explanation-title"><div class="sl-block-content"><h3>From an equation to a result</h3></div></div>
+  <div class="sl-block" data-id="explanation-math" style="left:40px;top:149px;width:360px;height:auto"><div class="sl-block-content equation" data-id="equation-type" style="font-size:26px">\[\boldsymbol\beta\mid\mathbf y\sim N(m,V)\]</div></div>
+  <div class="sl-block" data-id="explanation-code" style="left:415px;top:107px;width:510px;height:auto"><div class="sl-block-content"><pre data-id="code-type" style="font-size:17px"><code class="language-python" data-code-source="posterior">def posterior(X, y, sigma):
+    precision = np.eye(2) + X.T @ X / sigma**2
+    covariance = np.linalg.inv(precision)
+    mean = covariance @ X.T @ y / sigma**2
+    return mean, covariance</code></pre></div></div>
+  <div class="sl-block" style="left:30px;top:317px;width:445px;height:310px"><div class="sl-block-content"><img src="figs/regression.png" alt="Posterior fit with pointwise credible bands"></div></div>
+  <div class="sl-block" style="left:485px;top:317px;width:445px;height:310px"><div class="sl-block-content"><img src="figs/residuals.png" alt="Observation errors relative to the true mean"></div></div>
+</section>
+
+<!-- 11. No data-autoplay: fragment visibility owns the video lifecycle. -->
+<section aria-label="Fragment-controlled animation">
+  <div class="sl-block slide-title"><div class="sl-block-content"><h3>Watch the evidence accumulate</h3></div></div>
+  <div class="sl-block fragment" data-fragment-index="0" style="left:60px;top:110px;width:840px;height:auto"><div class="sl-block-content"><p>Update the posterior as each observation arrives.</p></div></div>
+  <div class="sl-block fragment" data-fragment-index="1" style="left:55px;top:197px;width:850px;height:395px">
+    <div class="sl-block-content"><video id="regression-animation" data-fragment-video muted loop playsinline preload="auto" poster="figs/animation-initial.png" aria-label="Sequential analytic Bayesian regression updates"><source src="figs/animation.mp4" type="video/mp4"></video></div>
+  </div>
+  <div class="sl-block fragment" data-fragment-index="1" style="left:65px;top:605px;width:830px;height:auto"><div class="sl-block-content small" style="display:flex;align-items:center;justify-content:space-between"><span>Bands describe uncertainty in the mean response.</span><button class="media-toggle" data-video-toggle="regression-animation">Play animation</button></div></div>
+</section>
+
+<!-- 12. Closing. -->
+<section class="divider" data-background-color="#f08383" aria-label="Closing">
+  <div class="sl-block" style="left:75px;top:220px;width:810px;height:auto"><div class="sl-block-content"><h3 style="font-size:65px">Questions?</h3></div></div>
+  <div class="sl-block" style="left:80px;top:490px;width:800px;height:auto"><div class="sl-block-content" style="font-size:25px"><p>Presenter name · Contact details</p></div></div>
+</section>
+
+</div></div>
+<script src="vendor/reveal/reveal.js"></script>
+<script src="vendor/reveal/plugin/highlight.js"></script>
+<script src="vendor/katex/katex.min.js"></script>
+<script src="vendor/katex/contrib/auto-render.min.js"></script>
+<script src="slides.js"></script>
+</body>
+</html>

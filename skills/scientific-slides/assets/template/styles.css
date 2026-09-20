@@ -1,0 +1,62 @@
+@font-face {
+  font-family: Montserrat;
+  src: url("vendor/montserrat/Montserrat[wght].ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Montserrat;
+  src: url("vendor/montserrat/Montserrat-Italic[wght].ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+:root {
+  --ink: #444;
+  --secondary: #555;
+  --muted: #777;
+  --vocab: #ac2a2a;
+  --coral: #f08383;
+  --teal: #00897b;
+}
+body { margin: 0; background: white; }
+.reveal { font: 28px/1.4 Montserrat, sans-serif; color: var(--ink); }
+.reveal .slides { text-align: left; }
+.reveal .slides section { height: 700px; padding: 0; }
+.reveal .sl-block { position: absolute; box-sizing: border-box; }
+.reveal .sl-block-content { width: 100%; height: 100%; box-sizing: border-box; }
+.reveal h3 { margin: 0; font-weight: 600; line-height: 1.18; color: inherit; }
+.reveal .slide-title { left: 55px; top: 28px; width: 850px; font-size: 37px; }
+.reveal p { margin: 0 0 20px; }
+.reveal strong, .reveal b { font-weight: 600; }
+.reveal em { font-style: italic; }
+.reveal ul { margin: 0; padding-left: 30px; }
+.reveal li { margin: 0 0 16px; }
+.reveal img, .reveal video { display: block; width: 100%; height: 100%; object-fit: contain; margin: 0; border: 0; box-shadow: none; }
+.reveal .vocab { color: var(--vocab); }
+.reveal .citation { color: var(--coral); font-size: .72em; font-style: italic; }
+.reveal .citation-footer { left: 40px; width: 880px; bottom: 20px; font-size: 15px; line-height: 1.4; color: #666; }
+.reveal .citation-footer p { padding-left: 18px; text-indent: -18px; margin: 0 0 5px; }
+.reveal a { color: inherit; text-underline-offset: 3px; }
+.reveal .rectangle { border: 2px solid var(--ink); border-radius: 8px; background: #00000005; padding: 25px 30px; }
+.reveal .equation { text-align: center; }
+.reveal .katex-display { margin: .4em 0; }
+.reveal .small { font-size: 21px; color: var(--secondary); }
+.reveal .label { font-size: 21px; font-weight: 600; }
+.reveal pre { width: 100%; margin: 0; box-shadow: none; font-size: 18px; line-height: 1.45; text-align: left; }
+.reveal pre code { display: block; max-height: none; padding: 18px 16px; border: 1px solid #dedede; border-radius: 8px; white-space: pre; background: #fff; color: #333; overflow: hidden; tab-size: 4; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+.reveal .outline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.reveal .outline-card { min-height: 160px; padding: 26px; border: 2px solid #555; border-radius: 14px; }
+.reveal .outline-card b { display: block; margin-bottom: 15px; font-size: 25px; }
+.reveal .outline-card p { margin: 0; font-size: 21px; color: #555; }
+.reveal .divider { color: white; }
+.reveal .media-toggle { font: inherit; font-size: 16px; color: #555; background: white; border: 1px solid #ccc; border-radius: 5px; padding: 5px 12px; cursor: pointer; }
+.reveal .media-toggle:focus-visible { outline: 3px solid var(--teal); }
+.reveal .slide-number { font: 14px Montserrat, sans-serif; color: #777; background: transparent; }
+.reveal .progress { color: var(--coral); }
+.reveal .controls { color: #888; }
+.reveal .diagram text { font-family: Montserrat, sans-serif; fill: var(--ink); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal *, .reveal *::before, .reveal *::after { transition-duration: 0s !important; animation-duration: 0s !important; }
+}

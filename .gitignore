@@ -1,0 +1,11 @@
+# Local environments and generated review/computation files.
+.venv/
+__pycache__/
+*.py[cod]
+_cache/
+.preview/
+dist/
+.DS_Store
+Thumbs.db
+
+# Keep presentation.md, scientific source, and finished gallery assets tracked.

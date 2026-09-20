@@ -1,0 +1,20 @@
+* text=auto
+*.md text eol=lf whitespace=-blank-at-eol
+*.py text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.bib text eol=lf
+*.svg text eol=lf
+*.png binary
+*.jpg binary
+*.mp4 binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+
+# Preserve downloaded runtime and font assets byte for byte.
+skills/scientific-slides/assets/template/vendor/** -text -whitespace linguist-vendored
+skills/scientific-slides/assets/template/figs/** -whitespace linguist-generated

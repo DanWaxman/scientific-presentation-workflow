@@ -1,0 +1,19 @@
+# Merge these paths into an existing site's exclude list; do not replace it.
+# Paths are relative to the Jekyll site root, so prefix them for nested decks.
+exclude:
+  - presentation.md
+  - references.bib
+  - code/
+  - .preview/
+  - .venv/
+  - dist/
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
