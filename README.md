@@ -1,11 +1,22 @@
 # Scientific presentation workflow
 
-A standalone repository with two portable agent skills for making scientific figures and author-led HTML presentations:
+I've been writing lots of talks recently ([ex1](https://danwaxman.github.io/talks/mit_cse_f26/), [ex2](https://danwaxman.github.io/talks/siam_ne_26/), [ex3](https://danwaxman.github.io/talks/isba_wm_26/), [ex4](https://danwaxman.github.io/talks/q4c_feb_26/index.html)) -- I want these to be high-quality, but also not my full-time job. Figuring out how to use LLMs (I've been told the kids say "agents") for this task is a bit tricky: the point of a presentation is that you're hearing from _me_, and deriving the content, words, and what visuals should be shown are a big part of that experience that shouldn't be automated away! Living in our current age, this has been discussed by many many people, but I especially resonated with Gautam Kamath's [concise blog post](https://kamathematics.wordpress.com/2026/05/27/making-a-talk-without-and-with-ai/).
 
-- **[scientific-plotting](skills/scientific-plotting/SKILL.md)**: clean Matplotlib figures, consistent color, honest uncertainty, and reproducible rendering.
+These are "skills" that I've accumulated to make `reveal.js` presentations, along with the corresponding workflow. The idea is:
+1. Write your presentation in a flavored markdown file, `presentation.md`. The agent will use your words _verbatim_ from this file, and follow your instructions `<written in brackets>` regarding layout and accompanying figures.
+2. Use a coding agent in "planning mode" to review your proposed new/modified slides, and make them so, handling the requisite HTML/CSS/Javascript schenanigans. The idea is not to add anything new, but execute your vision as-written.
+3. The agent has some Python files that let it open in a headless Chrome instance, take screenshots, and iterate on the formatting as to (a) adhere to your instructions whilst (b) avoiding trivial things like line overflows and colliding materials.
+
+(These skills are largely LLM-written, based on existing plots and presentations I had, with some careful human editing done in each case. This write-up is mostly human-written, with some LLM help for installation instructions.)
+
+## Packaged Skills
+
+We package two skills; one for making `reveal.js` plots, and also an opintionated "scientific plotting" skill. Both of these, obviously, come from my taste and style. You can and should edit these to match yours.
+
 - **[scientific-slides](skills/scientific-slides/SKILL.md)**: an agreed `presentation.md` draft translated into a local Reveal.js deck, then visually reviewed.
+- **[scientific-plotting](skills/scientific-plotting/SKILL.md)**: clean Matplotlib figures, consistent color, honest uncertainty, and reproducible rendering.
 
-The **[layout gallery](skills/scientific-slides/assets/template/index.html)** is a complete presentation. Open its `index.html` in a modern browser; it needs no network connection, installation, or build step. Use arrow keys to advance and Escape for an overview. All examples are generic and editable.
+These skills use a set of templates, as seen in the packaged [layout gallery](skills/scientific-slides/assets/template/index.html). This should give a general idea of what the presentation will look like when executed.
 
 ## Install or use directly
 
@@ -36,15 +47,36 @@ The commands below run from the repository root. Create your talk beside the che
 python3 skills/scientific-slides/scripts/new_deck.py ../my-talk
 ```
 
-This copies the complete offline gallery into a new directory and refuses to overwrite an existing project. Open `../my-talk/index.html`, then replace the illustrative material with your talk. The gallery includes prose/math reveals, citations, code, scientific plots, diagrams, an outline, video, and large explanations that move and shrink when results appear.
+This copies the complete offline gallery into a new directory.
 
-Edit `../my-talk/presentation.md` first. Ordinary text and equations are the exact visible content; clearly marked instructions describe layout, figures, references, and reveals. The matching gallery draft demonstrates this convention. Tell the agent which wording is settled and which content needs development.
+To start writing a talk, open `../my-talk/presentation.md`. Here, you can include slide information, including content and layout. Something like
+
+```markdown
+<Layout: 70/30 text/figure. The equation should be centered within the left panel.>
+
+# Linear Regression
+
+- The simplest model we can write is linear regression:
+
+$$ y = X \theta + \varepsilon. $$
+
+- For a simple Bayesian model:
+  - Let's assume the law of $\varepsilon$ is known
+  - Let's take a prior $\theta \sim \mathcal{N}(0, 1)$.
+
+<Plot: generate 50 points from the generative model x ~ N(0, 1), y | x ~ N(2x + 1, 0.2^2).
+
+Use a simple NumPyro model to implement this model, run MCMC to obtain results, then plot
+the resulting regression, with uncertainty bars, using our scientific plotting skill.>
+```
+
+Then, instruct an agent to "translate" your markdown example into corresponding HTML.
 
 > Translate slides 2–4 of presentation.md into index.html. Preserve my titles, prose, notation, and reveal order. Use the draft's layout instructions, ask about substantive ambiguities, then screenshot each fragment state and the neighbouring slides.
 
-> The result slide is crowded. Keep the prose exact, enlarge the explanation initially, then move it into its compact position when the plots arrive. Update that slide's layout instructions after implementing the agreed change.
+You can then provide iterative feedback, so that the implementation matches what's in your head :).
 
-This is **agent-assisted HTML authoring**, not a Markdown compiler. Editing the draft does not automatically change the slides. `index.html` is the artifact presented in the browser. Keep the draft synchronized with agreed changes and track it in Git, alongside scientific source and bibliography.
+> The result slide is crowded. Keep the prose exact, enlarge the explanation initially, then move it into its compact position when the plots arrive. Update that slide's layout instructions after implementing the agreed change.
 
 ## Dependencies
 
@@ -106,11 +138,7 @@ For more detailed layout, citation, motion, and draft conventions, read [authori
 
 ## Contributing
 
-Keep changes focused and describe the behavior, motivation, and validation in a readable pull request. Preserve the author's supplied prose and notation in translation examples; propose language changes explicitly. Keep scientific computation separate from cached rendering, and retain provenance and the distinction between real results and illustrative data.
-
-For changes to the template or helpers, create a fresh deck outside the checkout, regenerate the synthetic figures, render again from the cache, inspect every fragment, and preview the staged publication files offline. Update the draft and documentation when behavior changes. Preserve dependency versions, upstream provenance, and license notices when modifying the bundled runtime. Generated talks, previews, and local environments do not belong in contributions.
-
-If this workflow is included as a Git submodule, clone the enclosing repository with `git clone --recurse-submodules <repository-url>`, or initialize an existing checkout with `git submodule update --init --recursive`. Commit and push changes inside the skill repository first; then commit its updated submodule pointer in the enclosing repository.
+I'm not planning on accepting substantive outside contributions.
 
 ## License
 
